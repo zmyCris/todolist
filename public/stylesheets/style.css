@@ -1,0 +1,165 @@
+/*
+  通用样式
+*/
+body {
+  padding: 0px;
+  margin: 0px;
+  font:  "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color:inherit;
+  font-style: normal;
+  
+}
+ul {
+  font-style: none;
+  margin:0;
+  padding:0;
+}
+li {
+  list-style: none;
+}
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: " ";
+}
+.clearfix:after {
+    clear: both;
+}
+.clearfix{
+    *zoom: 1;
+}
+.fl {
+  float:left;
+}
+.fr {
+  float:right;
+}
+.hidden {
+  display: none;
+}
+.done{
+  text-decoration: line-through;
+}
+.checked {
+  color:#ff6700;
+}
+/* */
+.header {
+  height:50px;
+  background-color:#101010;
+  font-weight: bold;
+  font-style:initial;
+  color:#fff;
+}
+.container {
+  width:1100px;
+  position: relative;
+  margin: auto;
+  
+}
+.header #pageName {
+  font-size: 22px;
+  margin-bottom:  0px;
+  margin-left:100px;
+  float:left;
+  height:50px;
+  line-height: 50px;
+}
+.header #date {
+  float: right;
+  height:50px;
+  padding-bottom: 0px;
+  line-height: 55px;
+  font-weight: 400;
+  font-size: 16px;
+  margin-right:50px;
+}
+/* */
+.line {
+  height:8px;
+  border-bottom: solid 0.5px #999595;
+  box-shadow:0px 1px 0.5px 0.5px #cac7c7;
+}
+
+/* */
+.nav {
+  padding-top:8px;
+}
+.nav li {
+  float:right;
+  margin-right:5px;
+  font-size: 20px;
+  color:rgb(92, 89, 89);
+  font-style: initial;
+  letter-spacing: 1px;
+  cursor: pointer;
+}
+.nav li.checked {
+  color:#ff6700;
+}
+
+/* */
+.main {
+  height:500px;
+  padding-top:25px;
+}
+.main .type {
+  width:280px;
+  text-align: center;
+  border-bottom: 1px solid rgb(189, 181, 181);
+}
+.main .type li {
+  height:60px;
+  line-height: 60px;
+  width:100%;
+  font-weight:300;
+  font-size: 24px;
+  display: block;
+  background-color: #fff;
+  border: 1px solid rgb(189, 181, 181);
+  box-shadow: 1px 1px 0.1px 0.1px #999595;
+  border-radius: 0px 2px 2px 0px;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+/* */
+.todolist {
+  margin-left:40px;
+  display: block;
+}
+.todolist .item {
+  height:35px;
+  line-height: 25px;
+  font-size: 20px;
+  width:780px;
+  margin-top:15px;
+}
+.todolist .item .status {
+  width: 25px;
+  height:25px;
+  margin-right:10px;
+  outline: none;
+}
+
+.todolist .item .edit {
+  height:25px;
+  width:600px;
+  outline: none;
+  font-size: 20px;
+}
+.todolist .item .date {
+  font-size: 18px;
+  font-weight: 300px;
+  letter-spacing: -0.5px; 
+}
+.todolist .item .delBtn {
+  width:30px;
+  margin-left:10px;
+  height:30px;
+  outline: none;
+  color:#ff6700;
+}

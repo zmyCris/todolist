@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="../node_modules/Vue-2.6.10.js"></script>
+    <title>Document</title>
+</head>
+<body>
+        <div id="app">
+                {{info}}
+                {{test}}
+        </div>
+              
+</body>
+<script>
+   new Vue({
+  el: '#app',
+  data () {
+    return {
+      info: null,
+      test:"fdf"
+    }
+  },
+  mounted () {
+    axios
+      .get('https://www.runoob.com/try/ajax/json_demo.json')
+      .then(response => (this.info = response))
+      .catch(function (error) { // 请求失败处理
+        console.log(error);
+      });
+  }
+})
+</script>
+</html>
