@@ -1,12 +1,24 @@
+/**
+ * @module thingController
+ */
 const client = require('../utils/mongoUtil')
 const getDate = require('../utils/getDateUtil')
 const validate = require("../utils/ajvUtil")
 
-//默认
+/**
+ * @description GET date
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function date(ctx, next) { 
     ctx.body = getDate()  
 }
-//新增事件
+
+/**
+ * @description addThing
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function addThing(ctx, next) {
     const info = ctx.request.body
     const newThing = {
@@ -16,10 +28,9 @@ async function addThing(ctx, next) {
       type:info.type,
       edit:0,
     }
-    //数据校验
+    
     if(!validate(newThing)) return
 
-    //链接数据库
     await client.connect()
     const db =  client.db("koa_test")
     const thingCol = db.collection("thingDB")
@@ -28,7 +39,12 @@ async function addThing(ctx, next) {
     ctx.body = msg
     
   }
-//删除事件
+
+/**
+ * @description deleteThing
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function deleteThing(ctx, next) {
     //数据库操作
     await client.connect()
@@ -39,7 +55,11 @@ async function deleteThing(ctx, next) {
     
 }
 
-//更新事件
+/**
+ * @description updateThing
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function updateThing(ctx, next) {
     let oldBody = {
       body:ctx.request.body.oldBody
@@ -55,10 +75,12 @@ async function updateThing(ctx, next) {
     let thingCol = db.collection("thingDB")
     
     ctx.body = await thingCol.updateOne(oldBody,newBody)
-    
 }
-
-//查找事件
+/**
+ * @description findThing
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function findThing(ctx, next) {
     let findInfo = {
       type : parseInt(ctx.request.query.type)
@@ -77,7 +99,11 @@ async function findThing(ctx, next) {
     ctx.body = await thingCol.find(findInfo).toArray();
 }
 
-//更改状态
+/**
+ * @description changeEdit
+ * @param {*} ctx 
+ * @param {*} next 
+ */
 async function changeEdit(ctx, next) {
     const findInfo = {
       body:ctx.request.body.body
@@ -92,9 +118,11 @@ async function changeEdit(ctx, next) {
     const db =  client.db("koa_test")
     const thingCol = db.collection("thingDB")
    
-    ctx.body = await thingCol.updateOne(findInfo,changeInfo)
-    
+    ctx.body = await thingCol.updateOne(findInfo,changeInfo) 
 }
+
+
+
 module.exports = {
     date,
     addThing,
