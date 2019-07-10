@@ -1,31 +1,31 @@
-const Ajv = require("ajv")
+const Ajv = require("ajv");
 
 //JSON Schema
 let thingSchema = {
-    "type" : "object",
-    "additionalProperties":false,
-    "required" : [ "body","status","type","date"],
-    "properties" : {
-        "body" : {
-            "type" : 'string'
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["body", "status", "type", "date"],
+    "properties": {
+        "body": {
+            "type": 'string'
         },
-        "status" : {
-            "type" : 'boolean'
+        "status": {
+            "type": 'boolean'
         },
-        "type" : {
-            "type" : 'number'
+        "type": {
+            "type": 'number'
         },
-        "date" : {
-            "type" : 'string'
+        "date": {
+            "type": 'string'
         },
-        "edit" : {
-            "type" : 'number'
+        "edit": {
+            "type": 'number'
         }
 
     }
-}
+};
 
-const ajv = new Ajv()
-const vaildate = ajv.compile(thingSchema)
+const ajv = new Ajv();
+const vaildate = ajv.compile(thingSchema);
 
-module.exports = vaildate
+module.exports = vaildate;

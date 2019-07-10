@@ -1,17 +1,17 @@
-const router = require('koa-router')()
+const router = require('koa-router')();
 
-const thingCtrl = require("../controller/thingController")
+const thingCtrl = require("../controller/thingController");
 
-router.prefix('/thingRouter')
+router.prefix('/thingRouter');
 
-router.get('/',thingCtrl.date)
+router.get('/', thingCtrl.date);
 /**
  * @desc 事件操作
  */
-router.post('/addThing',thingCtrl.addThing)
-router.post('/deleteThing',thingCtrl.deleteThing)
-router.post('/updateThing',thingCtrl.updateThing)
-router.get('/findThing',thingCtrl.findThing)
-router.post('/changeEdit',thingCtrl.changeEdit)
+router.post('/addThing', thingCtrl.addThing);
+router.post('/deleteThing', thingCtrl.deleteThing);
+router.post('/updateThing', thingCtrl.updateThing);
+router.get('/findThing', thingCtrl.findThing);
+router.post('/changeEdit', thingCtrl.changeEdit);
 
-module.exports = router
+module.exports = router;
