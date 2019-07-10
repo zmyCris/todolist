@@ -125,8 +125,6 @@ async function changeEdit(ctx) {
   ctx.body = await thingCol.updateOne(findInfo, changeInfo);
 }
 
-
-
 module.exports = {
   date,
   addThing,
