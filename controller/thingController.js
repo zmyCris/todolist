@@ -90,16 +90,14 @@ async function findThing(ctx) {
     type: parseInt(ctx.request.query.type)
   };
   let reqstatus = ctx.request.query.status;
-
-  if (reqstatus === 0) {
+  if (reqstatus === "0") {
     findInfo.status = false;
-  } else if (reqstatus === 1) {
+  } else if (reqstatus === "1") {
     findInfo.status = true;
   }
   await client.connect();
   const db = client.db("koa_test");
   const thingCol = db.collection("thingDB");
-
   ctx.body = await thingCol.find(findInfo).toArray();
 }
 

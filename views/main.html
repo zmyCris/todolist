@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,153 +11,162 @@
     <link rel="stylesheet" href="../public/stylesheets/style.css">
     <title>main</title>
 </head>
-<body> 
-<div id = "app">
-    <div class = "header">
-        <div class = "container clearfix">
-            <div id = "pageName">秋小日的小本本</div>
-            <div id = "date">{{date}}</div>
-        </div>     
-    </div>
 
-    <div class = "line"></div>
+<body>
+    <div id="app">
+        <div class="header">
+            <div class="container clearfix">
+                <div id="pageName">秋小日的小本本</div>
+                <div id="date">{{date}}</div>
+            </div>
+        </div>
 
-    <div class = " nav container clearfix">
-        <ul class = "clearfix">
-            <li  :class = "{checked:showStatus==1}" @click = "changeStatus(1)">done</li>
-            <li>/</li>
-            <li  :class = "{checked:showStatus==0}" @click = "changeStatus(0)">todo</li>
-            <li>/</li>
-            <li  :class = "{checked:showStatus==2}" @click = "changeStatus(2)">all</li>   
-        </ul>
-    </div>
+        <div class="line"></div>
 
-    <div class = "main">
-        <div class = "container clearfix">
-            <ul class = "type fl clearfix">
-                <li :class = "{checked:showType==0}" @click = "changeType(0)">待办事件</li>
-                <li :class = "{checked:showType==1}" @click = "changeType(1)">前端路径</li>
-                <li :class = "{checked:showType==2}" @click = "changeType(2)">每日计划</li>
-                <li :class = "{checked:showType==3}" @click = "changeType(3)">兴趣使然</li>
-                <li :class = "{checked:showType==4}" @click = "changeType(4)">书影音剧</li>              
-            </ul>
-            <ul class = "todolist fl">
-                <li class = "item clearfix" v-for = "(item,index) in thingList">
-                    <input type = "checkbox" class = "status fl" style="zoom:80%;" v-model="item.status" @click = "changeEdit(item.body,item.status)">
-                    <div :class = "{body:true,fl:true,hidden:item.edit==1,done:item.status}" >{{item.body}}</div>
-                    <input type="text" :class = "{edit:true,hidden:item.edit==0}"  v-model = "newBody">
-                    <button class = "delBtn fr" style="zoom:80%;" @click = "deleteThing(item.body)">X</button>
-                    <div class = "date fr">{{item.date}}</div>
-                </li>
-                <li class = "item clearfix" >
-                    <input type = "checkbox" class = "status fl" style="zoom:80%;" disabled>
-                    <input type="text" class = "edit" v-model = "newBody">
-                    <button class = "delBtn fr" style="zoom:80%;font-size: 24px;line-height: 20px;" @click = "addThing">+</button>
-                </li>
+        <div class=" nav container clearfix">
+            <ul class="clearfix">
+                <li :class="{checked:showStatus==1}" @click="changeStatus(1)">done</li>
+                <li>/</li>
+                <li :class="{checked:showStatus==0}" @click="changeStatus(0)">todo</li>
+                <li>/</li>
+                <li :class="{checked:showStatus==2}" @click="changeStatus(2)">all</li>
             </ul>
         </div>
+
+        <div class="main">
+            <div class="container clearfix">
+                <ul class="type fl clearfix">
+                    <li :class="{checked:showType==0}" @click="changeType(0)">待办事件</li>
+                    <li :class="{checked:showType==1}" @click="changeType(1)">前端路径</li>
+                    <li :class="{checked:showType==2}" @click="changeType(2)">每日计划</li>
+                    <li :class="{checked:showType==3}" @click="changeType(3)">兴趣使然</li>
+                    <li :class="{checked:showType==4}" @click="changeType(4)">书影音剧</li>
+                </ul>
+                <ul class="todolist fl">
+                    <li class="item clearfix" v-for="(item,index) in thingList">
+                        <input type="checkbox" class="status fl" style="zoom:80%;" v-model="item.status"
+                            @click="changeEdit(item.body,item.status)">
+                        <div :class="{body:true,fl:true,hidden:item.edit==1,done:item.status}">{{item.body}}</div>
+                        <input type="text" :class="{edit:true,hidden:item.edit==0}" v-model="newBody">
+                        <button class="delBtn fr" style="zoom:80%;" @click="deleteThing(item.body)">X</button>
+                        <div class="date fr">{{item.date}}</div>
+                    </li>
+                    <li class="item clearfix">
+                        <input type="checkbox" class="status fl" style="zoom:80%;" disabled>
+                        <input type="text" class="edit" v-model="newBody">
+                        <button class="delBtn fr" style="zoom:80%;font-size: 24px;line-height: 20px;"
+                            @click="addThing">+</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </div>
-</div> 
 
 </body>
 <script>
+    var vue = new Vue({
+        el: "#app",
+        data() {
+            return {
+                thingList: {},
+                date: "",
+                url: "http://localhost:3000/thingRouter/",
 
-var vue = new Vue({
-    el:"#app",
-    data () {
-        return {
-            thingList: {},
-            date:"",
-            url:"http://localhost:3000/thingRouter/",
-
-            showStatus:0,
-            showType:0,
-            newBody:""
-        }
-    },
-    methods:{
-        test :function(bod){alert(bod)},
-        init : function(){
-            axios.get(this.url)
-            .then((res) => {          
-                this.date = res.data
-            }).catch(err => {throw err})  
-            this.findThing()  
+                showStatus: 0,
+                showType: 0,
+                newBody: ""
+            }
         },
-        addThing : function(){
-            if(this.newBody == "") return
-            axios.post(this.url+"addThing",{
-                body:this.newBody,
-                type:this.showType          
-            })
-            .then((res) => {
-                this.newBody = ""
+        methods: {
+            test: function (bod) {
+                alert(bod)
+            },
+            init: function () {
+                axios.get(this.url)
+                    .then((res) => {
+                        this.date = res.data
+                    }).catch(err => {
+                        throw err
+                    })
                 this.findThing()
-            }).catch((err) => { console.log(err)})
-            
-        },
-        deleteThing : function(info){
-            axios.post(this.url+"deleteThing",{
-                body:info
-            }).then((res) => {
-                this.newBody = ""
+            },
+            addThing: function () {
+                if (this.newBody == "") return
+                axios.post(this.url + "addThing", {
+                        body: this.newBody,
+                        type: this.showType
+                    })
+                    .then((res) => {
+                        this.newBody = ""
+                        this.findThing()
+                    }).catch((err) => {
+                        console.log(err)
+                    })
+
+            },
+            deleteThing: function (info) {
+                axios.post(this.url + "deleteThing", {
+                    body: info
+                }).then((res) => {
+                    this.newBody = ""
+                    this.findThing()
+                }).catch(err => {
+                    throw err
+                })
+
+            },
+            updateThing: function (info) {
+                axios.post(this.url + "updateThing", {
+                    oldBody: info,
+                    newBody: this.newBody
+                }).then(res => {
+                    this.newBody = ""
+                }).catch(err => {
+                    throw err
+                })
                 this.findThing()
-            }).catch(err => {
-                throw err
-            })
-            
-        },
-        updateThing :function(info){
-            axios.post(this.url+"updateThing",{
-                oldBody:info,
-                newBody:this.newBody
-            }).then( res => {
-                this.newBody = ""
-            }).catch( err => {
-                throw err
-            })
-            this.findThing()
-        },
-        findThing : function() {
-            axios.get(this.url+"findThing",{
-                params:{
-                    type:this.showType,
-                    status:this.showStatus
-                }
-            })
-            .then((res) => {          
-                this.thingList = res.data
-                console.log(this.thingList)
-            }).catch(err => {throw err})  
-        },
-        changeType : function(index){
-            this.showType = index
-            this.findThing()
-        },
-        changeStatus : function(index) {
-            this.showStatus = index
-            this.findThing()
-        },
-        changeEdit : function(body,status){
-            
-            axios.post(this.url+"changeEdit",{
-                body:body,
-                status:status
-            }).then(res => {
+            },
+            findThing: function () {
+                axios.get(this.url + "findThing", {
+                        params: {
+                            type: this.showType,
+                            status: this.showStatus
+                        }
+                    })
+                    .then((res) => {
+                        this.thingList = res.data
+                        console.log(this.thingList)
+                    }).catch(err => {
+                        throw err
+                    })
+            },
+            changeType: function (index) {
+                this.showType = index
+                this.findThing()
+            },
+            changeStatus: function (index) {
+                this.showStatus = index
+                this.findThing()
+            },
+            changeEdit: function (body, status) {
 
-            }).catch(err => {
-                throw err
-            })
-            this.findThing()
+                axios.post(this.url + "changeEdit", {
+                    body: body,
+                    status: status
+                }).then(res => {
+
+                }).catch(err => {
+                    throw err
+                })
+                this.findThing()
+            }
+
+
+        },
+        mounted() {
+            this.init()
         }
-
-
-    },
-    mounted() {
-        this.init() 
-    }
-})
-
-
+    })
 </script>
+
 </html>
