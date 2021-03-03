@@ -32,7 +32,7 @@
     "moment": "^2.24.0",
     "mongod": "^2.0.0",
     "mongodb": "^3.2.7",
-    "pug": "^2.0.3",
+    "pug": "^3.0.1",
     "redis": "^2.8.0",
     "tern-node-mongodb-native": "^0.2.0",
     "thenjs": "^2.1.0"
